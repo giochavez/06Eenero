@@ -1,0 +1,35 @@
+from itertools import combinations
+
+def obtenUniverso(lista):
+	res=[]
+	for k in range(1,len(lista)+1):
+		res += list(combinations(lista,k))
+	return res
+
+def primero(universo):
+	return universo[0],0
+
+def siguiente(universo, pos_actual):
+	pos_actual +=1
+	if pos_actual==len(universo):
+		return None,-1
+	return universo[pos_actual],pos_actual
+
+def verificar(candidato,objetivo):
+	suma = 0
+	for x in candidato:
+		suma+=x
+	return suma == objetivo
+
+def exhaustiva(lista,objetivo):
+	universo = obtenUniverso(lista)
+	candidato,posicion = primero(universo)
+	while candidato:
+		if verificar(candidato,objetivo):
+			print(candidato)
+		candidato,posicion=siguiente(universo,posicion)
+
+if __name__=="__main__":
+	original = [6,9,4,2,1,8]
+	print(obtenUniverso(original))
+	exhaustiva(original,15)
